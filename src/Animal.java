@@ -5,13 +5,15 @@ public class Animal extends Card{
     private final double longueur;
     private final double longévité;
     private final double gestation_incubation;
+    private final int rareté;
 
-    public Animal(String nom, double poids, double longueur, double longévité, double gestation_incubation) {
+    public Animal(String nom, double poids, double longueur, double longévité, double gestation_incubation, int rareté) {
         this.nom = nom;
         this.poids = poids;
         this.longueur = longueur;
         this.longévité = longévité;
         this.gestation_incubation = gestation_incubation;
+        this.rareté = rareté;
     }
 
     public String getNom() {
@@ -32,6 +34,10 @@ public class Animal extends Card{
 
     public double getGestation_incubation() {
         return gestation_incubation;
+    }
+
+    public int getRareté() {
+        return rareté;
     }
 
     public double GetAttribute(String attribute){
