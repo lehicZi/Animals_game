@@ -1,0 +1,37 @@
+- Classe All_animals:
+
+Ecrire le nom de la classe en "camel case" (AllAnimals), plus utilisé en Java
+
+Créer un constructeur privé et une méthode statique permettant d'instancier tous les animaux,
+qu'on pourrait par exemple mettre dans une List<Animal> ou une ArrayList<Animal> (voir la doc Java
+sur l'utilisation des listes)
+
+Si les animaux ne sont pas modifiables, les mettre final
+
+- Classe Animal :
+
+Enlever les accents des méthodes, variables, etc (longévité -> longevite) car les accents ne
+sont pas des caractères ASCII et peuvent entrainer des problemes de compilation/interprétation
+
+Mettre la méthode GetAttribute en camel case (getAttribute)
+
+- Enum Attributes :
+
+Mettre en camel case + enlever les caractères non ASCII
+
+- Card :
+
+- Deck :
+
+- Fight :
+
+Rentre la méthode AskAttribute non statique et privée (car appelée seulement dans le code de la classe Fight)
++ la mettre en camel case
+
+Tenter de corriger les warnings de l'IDE concernant le return de la fonction AskAttribute (variable redondante)
+
+- Main :
+
+Décomposer le System.out.println (pour plus de clarté) en créant un animal (par exemple animalVainqueur)
+qui serait le résultat de l'appel de fonction animalFight, puis passer à System.out.println seulement
+"animalVainqueur.getNom()"
