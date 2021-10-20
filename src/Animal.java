@@ -1,19 +1,19 @@
-public class Animal extends Card{
+public class Animal{
 
     private final String nom;
     private final double poids;
     private final double longueur;
-    private final double longévité;
-    private final double gestation_incubation;
-    private final int rareté;
+    private final double longevite;
+    private final double gestationIncubation;
+    private final int rarete;
 
-    public Animal(String nom, double poids, double longueur, double longévité, double gestation_incubation, int rareté) {
+    public Animal(String nom, double poids, double longueur, double longevite, double gestation_incubation, int rarete) {
         this.nom = nom;
         this.poids = poids;
         this.longueur = longueur;
-        this.longévité = longévité;
-        this.gestation_incubation = gestation_incubation;
-        this.rareté = rareté;
+        this.longevite = longevite;
+        this.gestationIncubation = gestation_incubation;
+        this.rarete = rarete;
     }
 
     public String getNom() {
@@ -28,35 +28,33 @@ public class Animal extends Card{
         return longueur;
     }
 
-    public double getLongévité() {
-        return longévité;
+    public double getLongevite() {
+        return longevite;
     }
 
-    public double getGestation_incubation() {
-        return gestation_incubation;
+    public double getGestationIncubation() {
+        return gestationIncubation;
     }
 
-    public int getRareté() {
-        return rareté;
+    public int getRarete() {
+        return rarete;
     }
 
-    public double GetAttribute(String attribute){
+    public double getAttribute(String attribute){
         double choice =0;
-        if (attribute.equals("1") ) {
-            choice = poids;
-        }
-        else if (attribute.equals("4")) {
-            choice = gestation_incubation;
-        }
-        else if (attribute.equals("2")) {
-            choice = longueur;
-        }
-        else if (attribute.equals("3")){
-            choice = longévité;
-        }
-        else{
-            System.out.println("Erreur de frappe");
+        switch (attribute) {
+            case "1" -> choice = poids;
+            case "4" -> choice = gestationIncubation;
+            case "2" -> choice = longueur;
+            case "3" -> choice = longevite;
+            default -> System.out.println("Erreur de frappe");
         }
         return choice;
+    }
+
+    public String toString(){
+        String infos = "";
+        infos += nom + " : poids = " + poids + " kg, longueur = " + longueur + " m, longévité = " + longevite + " ans, gestation/incubation = " + gestationIncubation + " jours." ;
+        return infos;
     }
 }
