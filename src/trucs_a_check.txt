@@ -1,58 +1,34 @@
 - Classe All_animals:
 
-Si les animaux ne sont pas modifiables, les mettre final
-
-Dans la méthode instanciateAnimals(), d'abord créer tous les animaux dans un premier temps,
-puis les ajouter tous à la liste à la suite.
-
-Rendre la liste allAnimals private et créer un getter
 
 - Classe Animal :
 
-Dans la méthode toString(), instancie directement ta string infos avec sa valeur plutôt qu'avec "" et un += après
-(String infos = nom + " poids " ...), voire même directement dans le return (return nom + " poids " ...)
 
 - Enum Attributes :
 
-Mettre en camel case + mettre une majuscule au nom de la classe (clic droit -> Refactor)
 
 - Deck :
 
-Ne pas calculer le nombre de cartes dans le constructeur car ta liste est vide à ce moment là donc
-tu auras toujours un nombre de cartes == 0.
-Voir meme eventuellement enlever la variable numberCards et renvoyer listCards.size() dans ta méthode
-getNumberCards()
-
-Rendre la variable listCards privée et créer une méthode void addCard(Animal a) qui permet d'ajouter
-une carte au deck (voir les commentaires sur la classe Game)
 
 - Fight :
 
+
 - Game :
 
-Mettre la ligne "AllAnimals cards = new AllAnimals();" dans le constructeur plutôt qu'au début de
-la classe
-
-Plutôt que de faire "deckDealt.listCards.add(listAllCards.get(randomCardIndex));", utiliser la méthode "addCard()"
-de la classe Deck et faire "deackDealt.addCard(listAllCards.get(randomCardIndex));"
-
-La fonction remove(int index) des List ou ArrayList retourne l'élément (ici l'Animal) à supprimer avant
-de le supprimer, tu peux donc directement utiliser listAllCards.remove(randomCardIndex) plutôt que
-listAllCards.get(randomCardIndex) puis listAllCards.remove(randomCardIndex)
 
 - Player :
 
-Rendre playerDeck et victories private et créer des getters et setters
 
 - Main :
 
-Dans le if ligne 11, bien se rappeler que le symbole "==" permet de comparer uniquement les types primitifs (int,
+
+- Généralités :
+
+Bien se rappeler que le symbole "==" permet de comparer uniquement les types primitifs (int,
 double, float, boolean, etc) mais pas des objets !
 En java, tous les types non primitifs sont des classes filles de la classe Object (donc toute classe est du type
 MyClass extends Object, même si on ne le voit pas) qui contient plusieurs méthodes héritées, dont notamment
 "equals(Object o)" qui permet de comparer 2 objets.
-
-- Généralités :
 
 TOUJOURS mettre les variables globales des classes private et créer des getters/setters même si c'est un
 peu fastidieux.

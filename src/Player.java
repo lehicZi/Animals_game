@@ -1,8 +1,11 @@
+import java.util.List;
+
 public class Player {
 
     private final String playerName;
-    Deck playerDeck;
-    public int victories = 0;
+    private Deck playerDeck;
+    private int victories = 0;
+    private int order;
 
     public Player(String playerName, Deck playerDeck) {
         this.playerName = playerName;
@@ -12,4 +15,25 @@ public class Player {
     public String getPlayerName() {
         return playerName;
     }
+
+    public Deck getPlayerDeck() {
+        return playerDeck;
+    }
+
+    public int getVictories() {
+        return victories;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public void incrementVictories() {
+        this.victories ++;
+    }
+
 }
