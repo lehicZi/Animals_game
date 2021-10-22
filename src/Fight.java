@@ -1,26 +1,38 @@
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Fight {
-    public static Animal animalFight (Animal animal1, Animal animal2) {
+
+    private Fight() {
+
+    }
+
+    public static Animal animalFight (List<Animal> fightingAnimals) {
+
         String effectiveAttribute = askAttribute();
-        if (animal1.getAttribute(effectiveAttribute) > animal2.getAttribute(effectiveAttribute)) {
-            return animal1;
-        } else if (animal1.getAttribute(effectiveAttribute) < animal2.getAttribute(effectiveAttribute)) {
-            return animal2;
-        } else {
-            if (animal1.getRarete() > animal2.getRarete()){
-                return animal1;
+        Animal winner = fightingAnimals.get(0);
+
+        for (Animal animal : fightingAnimals){
+            if(animal.getAttribute(effectiveAttribute) > winner.getAttribute(effectiveAttribute)){
+                winner = animal;
             }
-            else if (animal1.getRarete() < animal2.getRarete()) {
-                return animal2;
+            else if (animal.getAttribute(effectiveAttribute) == winner.getAttribute(effectiveAttribute)){
+                if (animal.getRarete() > winner.getRarete()){
+                    winner = animal;
+                }
+                else if (animal.getRarete() == winner.getRarete()){
+                    if(animal.getOwner().getOrder() > winner.getOwner().getOrder()){
+                        winner = animal;
+                    }
+                }
             }
-            else {
-                return animal1; }
-            }
-            }
+
+        }
+        return winner;
+    }
+
+
     private static String askAttribute () {
         Scanner userChoice = new Scanner(System.in);
         System.out.println("Please enter the chose the attribute (1 : poids, 2 : longueur, 3 : longévité, 4 : Gestation/incubation)");

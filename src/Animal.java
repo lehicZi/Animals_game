@@ -6,6 +6,7 @@ public class Animal{
     private final double longevite;
     private final double gestationIncubation;
     private final int rarete;
+    private Player owner;
 
     public Animal(String nom, double poids, double longueur, double longevite, double gestation_incubation, int rarete) {
         this.nom = nom;
@@ -40,6 +41,14 @@ public class Animal{
         return rarete;
     }
 
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+
     public double getAttribute(String attribute){
         double choice =0;
         switch (attribute) {
@@ -52,9 +61,16 @@ public class Animal{
         return choice;
     }
 
+    @Override
     public String toString(){
-        String infos = "";
-        infos += nom + " : poids = " + poids + " kg, longueur = " + longueur + " m, longévité = " + longevite + " ans, gestation/incubation = " + gestationIncubation + " jours." ;
-        return infos;
+        return nom + " : poids = " + poids + " kg, longueur = " + longueur + " m, longévité = " + longevite + " ans, gestation/incubation = " + gestationIncubation + " jours." ;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof Animal a)){
+            return false;
+        }
+        return this.nom.equals(a.nom);
     }
 }
