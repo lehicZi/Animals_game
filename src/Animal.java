@@ -71,6 +71,7 @@ public class Animal{
         if(!(o instanceof Animal a)){
             return false;
         }
+
         return this.nom.equals(a.nom);
     }
 }

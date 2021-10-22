@@ -1,7 +1,5 @@
 package constant;
 
-import java.util.concurrent.ExecutionException;
-
 public class Rarete {
     public static final int VERT = 0;
     public static final int JAUNE = 1;

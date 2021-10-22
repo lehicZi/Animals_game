@@ -1,9 +1,7 @@
-import java.util.List;
-
 public class Player {
 
     private final String playerName;
-    private Deck playerDeck;
+    private final Deck playerDeck;
     private int victories = 0;
     private int order;
 

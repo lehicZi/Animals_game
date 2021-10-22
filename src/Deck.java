@@ -3,8 +3,7 @@ import java.util.List;
 
 public class Deck {
 
-    private List<Animal> listCards = new ArrayList<>();
-
+    private final List<Animal> listCards = new ArrayList<>();
 
     public int getNumberCards() {
         return listCards.size();

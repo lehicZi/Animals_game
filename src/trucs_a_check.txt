@@ -1,8 +1,39 @@
+- Généralités :
+
+1) Bien se rappeler que le symbole "==" permet de comparer uniquement les types primitifs (int,
+   double, float, boolean, etc) mais pas des objets !
+   En java, tous les types non primitifs sont des classes filles de la classe Object (donc toute classe est du type
+   MyClass extends Object, même si on ne le voit pas) qui contient plusieurs méthodes héritées, dont notamment
+   "equals(Object o)" qui permet de comparer 2 objets.
+
+2) TOUJOURS mettre les variables globales des classes private et créer des getters/setters même si c'est un
+   peu fastidieux.
+   Voir même, parfois, créer des méthodes plus spécifiques : dans le cas de Player qui a une variable victories,
+   plutôt que créer un setter standard
+
+   void setVictories(int victories){
+       this.victories += victories;
+   }
+
+   on peut imaginer que les victories seront incrémentées une par une, et on peut donc créer une méthode
+   "incrementVictories()" qui incrémentera de 1 le nombre de victoire du joueur
+
+   void incrementVictories(){
+       this.victories++;
+   }
+
+3) Bien se rappeler que comparer des String entre elles est beaucoup plus couteux que de
+   comparer des types primitifs, donc transformer tes String en int quand c'est possible
+
+- Trucs a discuter quand tu as le temps en vocal :
+
 - Classe All_animals:
 
 
 - Classe Animal :
 
+Modifier la méthode getAttribute(String s) pour qu'elle prenne en paramètre un int et plus une String.
+Voir trucs à check de la classe Fight pour plus d'infos
 
 - Enum Attributes :
 
@@ -12,41 +43,33 @@
 
 - Fight :
 
+Quand tu demandes l'attribut en ligne de commande à l'utilisateur, parser la String reçue en
+int pour améliorer les performances (méthode Integer.parseInt(String s)) en ayant au préalable vérifié que
+la String est bien un entier, en créant par exemple une méthode
+
+boolean isAnInt(String s){
+    try {
+        Integer.parseInt(s);
+    }
+    catch (NumberFormatException e){
+        return false; //La string passée en paramètre ne correspond pas à un entier
+    }
+
+    return true; //On a réussi à parser la string en entier, donc c'est un entier
+}
+
+Et de ce fait modifier la méthode getAttribute(String s) de la classe Animal
 
 - Game :
 
+Pas certain du fonctionnement de la méthode setOrder().
+Dans ce que tu fais, tu vas effectivement avoir le Player passé en paramètre qui aura la place 1,
+par contre les autres players resteront triés dans l'ordre de la liste vu que tu les récupères en
+faisant playersList.get(playerIndexNext) et que playerIndexNext correspond bien à l'index du premier
+Player au départ, mais est incrémenté de 1 à chacun de tes tours de boucle, alors qu'il devrait (si j'ai bien
+compris bien sûr) être recalculé à chaque tour de boucle pour savoir qui est le deuxième, le troisième etc
 
 - Player :
 
 
 - Main :
-
-
-- Généralités :
-
-Bien se rappeler que le symbole "==" permet de comparer uniquement les types primitifs (int,
-double, float, boolean, etc) mais pas des objets !
-En java, tous les types non primitifs sont des classes filles de la classe Object (donc toute classe est du type
-MyClass extends Object, même si on ne le voit pas) qui contient plusieurs méthodes héritées, dont notamment
-"equals(Object o)" qui permet de comparer 2 objets.
-
-TOUJOURS mettre les variables globales des classes private et créer des getters/setters même si c'est un
-peu fastidieux.
-Voir même, parfois, créer des méthodes plus spécifiques : dans le cas de Player qui a une variable victories,
-plutôt que créer un setter standard
-
-void setVictories(int victories){
-    this.victories += victories;
-}
-
-on peut imaginer que les victories seront incrémentées une par une, et on peut donc créer une méthode
-"incrementVictories()" qui incrémentera de 1 le nombre de victoire du joueur
-
-void incrementVictories(){
-    this.victories++;
-}
-
-- Trucs a discuter quand tu as le temps en vocal :
-
-Tag Override
-Méthodes héritées de la classe Object
