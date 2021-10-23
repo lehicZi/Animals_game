@@ -49,13 +49,13 @@ public class Animal{
         this.owner = owner;
     }
 
-    public double getAttribute(String attribute){
+    public double getAttribute(int attribute){
         double choice =0;
         switch (attribute) {
-            case "1" -> choice = poids;
-            case "4" -> choice = gestationIncubation;
-            case "2" -> choice = longueur;
-            case "3" -> choice = longevite;
+            case 1 -> choice = poids;
+            case 4 -> choice = gestationIncubation;
+            case 3 -> choice = longueur;
+            case 2 -> choice = longevite;
             default -> System.out.println("Erreur de frappe");
         }
         return choice;

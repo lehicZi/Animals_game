@@ -1,7 +1,12 @@
-public class Player {
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
+public abstract class Player {
 
     private final String playerName;
-    private final Deck playerDeck;
+    private Deck playerDeck;
     private int victories = 0;
     private int order;
 
@@ -33,5 +38,8 @@ public class Player {
     public void incrementVictories() {
         this.victories ++;
     }
+
+    public abstract int attributeChoice ();
+
 
 }

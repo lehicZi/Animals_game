@@ -2,75 +2,39 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] arg){
+    public static void main(String[] arg) {
 
-    int numberPlayers = 5;
-    String [] playersNames = new String[numberPlayers];
-    for (int nameIndex = 0; nameIndex < numberPlayers; nameIndex++){
-        Scanner playerName  = new Scanner(System.in);
-        System.out.println("Please enter j" + (nameIndex +1) + "'s name.");
-        playersNames[nameIndex] = playerName.next();
-    }
+        int numberPlayers = 2;
+        int numberRealPlayers = 1;
+        int numberAIPlayers = numberPlayers-numberRealPlayers;
+        String[] RealPlayersNames = new String[numberRealPlayers];
+        String[] AIPlayersNames = new String[numberAIPlayers];
 
-    Game gameTest = new Game(numberPlayers, playersNames);
-
-    Scanner starter  = new Scanner(System.in);
-    System.out.println("Who starts ?");
-    String starterName = starter.next();
-
-    for (Player player : gameTest.getPlayersList()){
-        if (player.getPlayerName().equals(starterName)){
-            gameTest.setOrder(player, gameTest.getPlayersList());
+        for (int nameIndex = 0; nameIndex < numberRealPlayers; nameIndex++) {
+            Scanner playerName = new Scanner(System.in);
+            System.out.println("Please enter Player N°" + (nameIndex + 1) + "'s name.");
+            RealPlayersNames[nameIndex] = playerName.next();
         }
-    }
+        for (int nameIndex = 0; nameIndex < (numberAIPlayers); nameIndex++) {
+            AIPlayersNames[nameIndex] = "Bot " + (nameIndex+1);
+        }
 
-    for (Player player : gameTest.getPlayersList()){
-        System.out.println(player.getOrder() + " order is " + player.getPlayerName());
-    }
+        Game gameTest = new Game(numberPlayers, numberRealPlayers, RealPlayersNames, AIPlayersNames);
 
+        Scanner starter = new Scanner(System.in);
 
-//    for (int currentFight = 0; currentFight < gameTest.getNumberCardsPerplayer(); currentFight++){
-//        List<Animal> fightingAnimals = new ArrayList<>();
-//        StringBuilder annonce = new StringBuilder();
-//
-//        for (int playerIndex = 0; playerIndex < numberPlayers; playerIndex++){
-//            Player currentPlayer = gameTest.getPlayersList().get(playerIndex);
-//            fightingAnimals.add(currentPlayer.getPlayerDeck().getListCards().get(currentFight));
-//            annonce.append(gameTest.getPlayersList().get(playerIndex).getPlayerDeck().getListCards().get(currentFight).getNom()).append(" VS ");
-//        }
-//
-//        System.out.println(annonce);
-//        System.out.println(gameTest.getPlayersList().get(0).getPlayerDeck().getListCards().get(currentFight));
-//
-//        List<Animal> potentialWinners = Fight.animalFight(fightingAnimals);
-//
-//        while (potentialWinners.size() != 1){
-//            for (Animal animal : potentialWinners){
-//                for (Player player : gameTest.getPlayersList()){
-//                    if(animal == player.getPlayerDeck().getListCards().get(currentFight)){
-//                        if (!player.getStarts()){
-//                            potentialWinners.remove(animal);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        Animal animalWinner = fightingAnimals.get(0);
-//        System.out.println(animalWinner.getNom());
-//        for (Player player : gameTest.getPlayersList()){
-//            if (animalWinner == player.getPlayerDeck().getListCards().get(currentFight)){
-//                player.incrementVictories();
-//            }
-//
-//        }
-//    }
-//    Player playerWinner = gameTest.getPlayersList().get(0);
-//    for (Player player : gameTest.getPlayersList()){
-//        if (player.getVictories() > playerWinner.getVictories()){
-//            playerWinner = player;
-//        }
-//    }
-//    System.out.println(playerWinner.getPlayerName() + " wins with " + playerWinner.getVictories() + " victories !");
+        System.out.println("Who starts ?");
+        String starterName = starter.next();
 
+        for (Player player : gameTest.getPlayersList()) {
+            if (player.getPlayerName().equals(starterName)) {
+                gameTest.setOrder(player, gameTest.getPlayersList());
+            }
+        }
+
+        gameTest.playersFight();
+        Player finalWinner = gameTest.findFinalWinner(gameTest.getPlayersList());
+
+        System.out.println(finalWinner.getPlayerName() + " wins with " + finalWinner.getVictories() + " victories !");
     }
 }

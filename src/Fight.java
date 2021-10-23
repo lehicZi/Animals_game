@@ -7,9 +7,8 @@ public class Fight {
 
     }
 
-    public static Animal animalFight (List<Animal> fightingAnimals) {
+    public static Animal animalFight (int effectiveAttribute, List<Animal> fightingAnimals) {
 
-        String effectiveAttribute = askAttribute();
         Animal winner = fightingAnimals.get(0);
 
         for (Animal animal : fightingAnimals){
@@ -31,13 +30,16 @@ public class Fight {
         return winner;
     }
 
+    private static boolean isAnInt(String s){
+        try {
+            Integer.parseInt(s);
+        }
+        catch (NumberFormatException e){
+            return false; //La string passée en paramètre ne correspond pas à un entier
+        }
 
-    private static String askAttribute () {
-        Scanner userChoice = new Scanner(System.in);
-        System.out.println("Please enter the chose the attribute (1 : poids, 2 : longueur, 3 : longévité, 4 : Gestation/incubation)");
-        return userChoice.next();
+        return true; //On a réussi à parser la string en entier, donc c'est un entier
     }
-
 
 //    private static String askAttributeGUI (){
 //        final String[] userChoice = new String[1];

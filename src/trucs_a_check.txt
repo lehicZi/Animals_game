@@ -8,19 +8,8 @@
 
 2) TOUJOURS mettre les variables globales des classes private et créer des getters/setters même si c'est un
    peu fastidieux.
-   Voir même, parfois, créer des méthodes plus spécifiques : dans le cas de Player qui a une variable victories,
-   plutôt que créer un setter standard
+   Voir même, parfois, créer des méthodes plus spécifiques.
 
-   void setVictories(int victories){
-       this.victories += victories;
-   }
-
-   on peut imaginer que les victories seront incrémentées une par une, et on peut donc créer une méthode
-   "incrementVictories()" qui incrémentera de 1 le nombre de victoire du joueur
-
-   void incrementVictories(){
-       this.victories++;
-   }
 
 3) Bien se rappeler que comparer des String entre elles est beaucoup plus couteux que de
    comparer des types primitifs, donc transformer tes String en int quand c'est possible
@@ -32,8 +21,6 @@
 
 - Classe Animal :
 
-Modifier la méthode getAttribute(String s) pour qu'elle prenne en paramètre un int et plus une String.
-Voir trucs à check de la classe Fight pour plus d'infos
 
 - Enum Attributes :
 
@@ -43,22 +30,6 @@ Voir trucs à check de la classe Fight pour plus d'infos
 
 - Fight :
 
-Quand tu demandes l'attribut en ligne de commande à l'utilisateur, parser la String reçue en
-int pour améliorer les performances (méthode Integer.parseInt(String s)) en ayant au préalable vérifié que
-la String est bien un entier, en créant par exemple une méthode
-
-boolean isAnInt(String s){
-    try {
-        Integer.parseInt(s);
-    }
-    catch (NumberFormatException e){
-        return false; //La string passée en paramètre ne correspond pas à un entier
-    }
-
-    return true; //On a réussi à parser la string en entier, donc c'est un entier
-}
-
-Et de ce fait modifier la méthode getAttribute(String s) de la classe Animal
 
 - Game :
 
