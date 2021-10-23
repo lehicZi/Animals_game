@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Scanner;
 
 public class Fight {
 
@@ -30,18 +29,7 @@ public class Fight {
         return winner;
     }
 
-    private static boolean isAnInt(String s){
-        try {
-            Integer.parseInt(s);
-        }
-        catch (NumberFormatException e){
-            return false; //La string passée en paramètre ne correspond pas à un entier
-        }
-
-        return true; //On a réussi à parser la string en entier, donc c'est un entier
-    }
-
-//    private static String askAttributeGUI (){
+    //    private static String askAttributeGUI (){
 //        final String[] userChoice = new String[1];
 //        JFrame frameAsk = new JFrame("Choix attriut");
 //

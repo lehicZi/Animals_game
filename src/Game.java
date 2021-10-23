@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Game {
 
@@ -9,10 +7,12 @@ public class Game {
     List<Animal> listAllCards;
     private int numberCardsFree;
     private final int numberCardsPerplayer;
+    private final List<Player> realPlayersList;
+    private final List<Player> AIPlayersList;
     private final List<Player> playersList;
 
 
-    public Game(int numberPlayers, int numberRealPlayers, String [] realPlayersNames, String[] AIPlayersNames) {
+    public Game(int numberPlayers, int numberRealPlayers, String [] realPlayersNames) {
         AllAnimals cards = new AllAnimals();
         this.numberPlayers = numberPlayers;
         this.numberRealPlayers = numberRealPlayers;
@@ -20,7 +20,12 @@ public class Game {
         numberCardsFree = listAllCards.size();
         numberCardsPerplayer = numberCardsFree/numberPlayers;
         this.playersList = new ArrayList<>();
-        createPlayersList(realPlayersNames, AIPlayersNames);
+        this.realPlayersList = new ArrayList<>();
+        this.AIPlayersList = new ArrayList<>();
+        createRealPlayersList(realPlayersNames);
+        createAIPlayersList();
+        playersList.addAll(realPlayersList);
+        playersList.addAll(AIPlayersList);
     }
 
     public int getNumberCardsPerplayer() {
@@ -35,27 +40,35 @@ public class Game {
         return numberCardsFree;
     }
 
-    public void createPlayersList(String[] namesRealPlayers, String[] AINames) {
+    public void createRealPlayersList(String[] namesRealPlayers) {
         Player player;
         Deck deck;
         for (String name : namesRealPlayers) {
             deck = deal();
             player = new RealPlayer(name, deck);
-            for (Animal animal : deck.getListCards()){
+            for (Animal animal : deck.getListCards()) {
                 animal.setOwner(player);
             }
-            playersList.add(player);
-        }
-        for (String name : AINames) {
-            deck = deal();
-            player = new AIPlayer(name, deck);
-            for (Animal animal : deck.getListCards()){
-                animal.setOwner(player);
-            }
-            playersList.add(player);
+            realPlayersList.add(player);
         }
     }
 
+    public void createAIPlayersList() {
+        Player player;
+        Deck deck;
+        String AIsname;
+        for (int nameIndex = 0; nameIndex < (numberPlayers-numberRealPlayers); nameIndex++) {
+            AIsname = "Bot " + (nameIndex+1);
+            deck = deal();
+            player = new AIPlayer(AIsname, deck);
+            for (Animal animal : deck.getListCards()) {
+                animal.setOwner(player);
+            }
+            AIPlayersList.add(player);
+        }
+
+    }
+    
     public Deck deal(){
         Random random = new Random();
         Deck deckDealt = new Deck();
@@ -69,17 +82,53 @@ public class Game {
         return deckDealt;
     }
 
-    public void setOrder(Player firstPlayer, List<Player> playersList) {
+    public Player defineStarter (){
+        Scanner getStarterType = new Scanner(System.in);
+
+        System.out.println("Who starts ? (1 : a real player, 2 : a bot)");
+        try {
+            int starterType = getStarterType.nextInt();
+
+            switch (starterType) {
+                case 1 -> {
+                    if (numberRealPlayers == 1) {
+                        return realPlayersList.get(0);
+                    } else {
+                        Scanner getStarterName = new Scanner(System.in);
+                        System.out.println("So who starts ? (Player's EXACT name)");
+                        String starterName = getStarterName.next();
+                        for (Player player : realPlayersList) {
+                            if (player.getPlayerName().equals(starterName)) {
+                                return player;
+                            }
+                        }
+                        System.out.println("Not a valid name.");
+                        return defineStarter();
+                    }
+                }
+                case 2 -> {
+                    Random random = new Random();
+                    return AIPlayersList.get(random.nextInt(numberPlayers - numberRealPlayers));
+                }
+                default -> {
+                    System.out.println("is it too hard to enter 1 or 2 ?");
+                    return defineStarter();
+                }
+            }
+
+        }
+        catch (InputMismatchException e) {
+            System.out.println("is it too hard to enter 1 or 2 ?");
+            return defineStarter();
+        }
+    }
+
+    public void giveOrder(Player firstPlayer, List<Player> playersList) {
         int firstPlace = playersList.indexOf(firstPlayer);
         int place = 1;
 
-        for (int playerIndexNext = firstPlace; playerIndexNext < playersList.size(); playerIndexNext++){
-            playersList.get(playerIndexNext).setOrder(place);
-            place ++;
-        }
-
-        for (int playerIndexBefore = 0; playerIndexBefore < firstPlace; playerIndexBefore++){
-            playersList.get(playerIndexBefore).setOrder(place);
+        for (int playerIndexNext = 0; playerIndexNext < playersList.size(); playerIndexNext++){
+            playersList.get((firstPlace+playerIndexNext)%playersList.size()).setOrder(place);
             place ++;
         }
     }
@@ -98,25 +147,35 @@ public class Game {
                     starter = currentPlayer;
                 }
                 if (playerIndex == numberPlayers - 1) {
-                    annonce.append(currentAnimal.getNom());
+                    annonce.append(currentPlayer).append("'s ").append(currentAnimal.getNom());
                 } else {
-                    annonce.append(currentAnimal.getNom()).append(" VS ");
+                    annonce.append(currentPlayer).append("'s ").append(currentAnimal.getNom()).append(" VS ");
                 }
 
             }
 
-            System.out.println(annonce);
-            System.out.println(playersList.get(0).getPlayerDeck().getListCards().get(currentFight));
+//            System.out.println(annonce);
+            for (Player player : realPlayersList){
+                    System.out.println(player.getPlayerDeck().getListCards().get(currentFight));
+            }
 
+            int codeEffectiveAttribute = starter.attributeChoice();
+            Animal startersAnimal = starter.getPlayerDeck().getListCards().get(currentFight);
 
+            System.out.println(starter + " chose " + startersAnimal.getAttributesName(codeEffectiveAttribute));
 
-            Animal animalWinner = Fight.animalFight(starter.attributeChoice(), fightingAnimals);
+            Animal animalWinner = Fight.animalFight(codeEffectiveAttribute, fightingAnimals);
             Player playerWinner = animalWinner.getOwner();
-            setOrder(playerWinner, playersList);
+            giveOrder(playerWinner, playersList);
 
+            System.out.println("The fight was " + annonce);
             System.out.println(animalWinner.getOwner().getPlayerName() + " wins with his " + animalWinner.getNom());
+
             playerWinner.incrementVictories();
 
+            Scanner block = new Scanner(System.in);
+            System.out.println("Please tap any thing to pursue.");
+            block.next();
         }
     }
 

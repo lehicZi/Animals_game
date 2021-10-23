@@ -1,12 +1,7 @@
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
-
 public abstract class Player {
 
     private final String playerName;
-    private Deck playerDeck;
+    private final Deck playerDeck;
     private int victories = 0;
     private int order;
 
@@ -41,5 +36,9 @@ public abstract class Player {
 
     public abstract int attributeChoice ();
 
+    @Override
+    public String toString(){
+        return playerName;
+    }
 
 }

@@ -33,12 +33,6 @@
 
 - Game :
 
-Pas certain du fonctionnement de la méthode setOrder().
-Dans ce que tu fais, tu vas effectivement avoir le Player passé en paramètre qui aura la place 1,
-par contre les autres players resteront triés dans l'ordre de la liste vu que tu les récupères en
-faisant playersList.get(playerIndexNext) et que playerIndexNext correspond bien à l'index du premier
-Player au départ, mais est incrémenté de 1 à chacun de tes tours de boucle, alors qu'il devrait (si j'ai bien
-compris bien sûr) être recalculé à chaque tour de boucle pour savoir qui est le deuxième, le troisième etc
 
 - Player :
 

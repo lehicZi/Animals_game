@@ -8,33 +8,26 @@ public class Main {
         int numberRealPlayers = 1;
         int numberAIPlayers = numberPlayers-numberRealPlayers;
         String[] RealPlayersNames = new String[numberRealPlayers];
-        String[] AIPlayersNames = new String[numberAIPlayers];
 
         for (int nameIndex = 0; nameIndex < numberRealPlayers; nameIndex++) {
             Scanner playerName = new Scanner(System.in);
             System.out.println("Please enter Player N°" + (nameIndex + 1) + "'s name.");
             RealPlayersNames[nameIndex] = playerName.next();
         }
-        for (int nameIndex = 0; nameIndex < (numberAIPlayers); nameIndex++) {
-            AIPlayersNames[nameIndex] = "Bot " + (nameIndex+1);
-        }
 
-        Game gameTest = new Game(numberPlayers, numberRealPlayers, RealPlayersNames, AIPlayersNames);
 
-        Scanner starter = new Scanner(System.in);
+        Game gameTest = new Game(numberPlayers, numberRealPlayers, RealPlayersNames);
 
-        System.out.println("Who starts ?");
-        String starterName = starter.next();
+        gameTest.giveOrder(gameTest.defineStarter(),gameTest.getPlayersList());
 
-        for (Player player : gameTest.getPlayersList()) {
-            if (player.getPlayerName().equals(starterName)) {
-                gameTest.setOrder(player, gameTest.getPlayersList());
-            }
-        }
+//        for(Player player : gameTest.getPlayersList()) {
+//            System.out.println(player + " plays "+player.getOrder()+"th place.");
+//        }
+
 
         gameTest.playersFight();
         Player finalWinner = gameTest.findFinalWinner(gameTest.getPlayersList());
 
-        System.out.println(finalWinner.getPlayerName() + " wins with " + finalWinner.getVictories() + " victories !");
+        System.out.println(finalWinner.getPlayerName() + " wins the game with " + finalWinner.getVictories() + " victories !");
     }
 }

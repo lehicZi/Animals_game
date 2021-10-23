@@ -50,15 +50,39 @@ public class Animal{
     }
 
     public double getAttribute(int attribute){
-        double choice =0;
         switch (attribute) {
-            case 1 -> choice = poids;
-            case 4 -> choice = gestationIncubation;
-            case 3 -> choice = longueur;
-            case 2 -> choice = longevite;
-            default -> System.out.println("Erreur de frappe");
+            case 1 -> {
+                return poids;
+            }
+            case 2 -> {
+                return longevite;
+            }
+            case 3 -> {
+                return longueur;
+            }
+            case 4 -> {
+                return gestationIncubation;
+            }
+            default -> throw new IllegalStateException();
         }
-        return choice;
+    }
+
+    public String getAttributesName(int attribute){
+        switch (attribute) {
+            case 1 -> {
+                return "poids";
+            }
+            case 2 -> {
+                return "longueur";
+            }
+            case 3 -> {
+                return "longévité";
+            }
+            case 4 -> {
+                return "gestion/incubation";
+            }
+            default -> throw new IllegalStateException();
+        }
     }
 
     @Override
