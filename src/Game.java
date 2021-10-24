@@ -133,6 +133,14 @@ public class Game {
         }
     }
 
+    public List<Player> orderPlayersList(){
+        List<Player> orderedPlayersList = new ArrayList<>(playersList);
+        for (Player player : playersList){
+            orderedPlayersList.set((player.getOrder()-1), player);
+        }
+        return orderedPlayersList;
+    }
+
     public void playersFight (){
         for (int currentFight = 0; currentFight < numberCardsPerplayer; currentFight++) {
             List<Animal> fightingAnimals = new ArrayList<>();
@@ -160,13 +168,17 @@ public class Game {
             }
 
             int codeEffectiveAttribute = starter.attributeChoice();
+
             Animal startersAnimal = starter.getPlayerDeck().getListCards().get(currentFight);
 
             System.out.println(starter + " chose " + startersAnimal.getAttributesName(codeEffectiveAttribute));
 
             Animal animalWinner = Fight.animalFight(codeEffectiveAttribute, fightingAnimals);
             Player playerWinner = animalWinner.getOwner();
+
             giveOrder(playerWinner, playersList);
+
+//            System.out.println(orderPlayersList());
 
             System.out.println("The fight was " + annonce);
             System.out.println(animalWinner.getOwner().getPlayerName() + " wins with his " + animalWinner.getNom());

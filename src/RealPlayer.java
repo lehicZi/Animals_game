@@ -20,5 +20,11 @@ public class RealPlayer extends Player{
         }
     }
 
+    @Override
+    public int attributeSwitch(){
+        return attributeChoice();
+    }
+
+
 
 }

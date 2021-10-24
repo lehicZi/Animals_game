@@ -36,6 +36,8 @@ public abstract class Player {
 
     public abstract int attributeChoice ();
 
+    public abstract int attributeSwitch ();
+
     @Override
     public String toString(){
         return playerName;

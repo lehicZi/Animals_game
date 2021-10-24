@@ -13,4 +13,9 @@ public class AIPlayer extends Player{
         return random.nextInt(4)+1;
     }
 
+    @Override
+    public int attributeSwitch(){
+        return attributeChoice();
+    }
+
 }

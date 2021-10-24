@@ -21,7 +21,7 @@ public class Main {
         gameTest.giveOrder(gameTest.defineStarter(),gameTest.getPlayersList());
 
 //        for(Player player : gameTest.getPlayersList()) {
-//            System.out.println(player + " plays "+player.getOrder()+"th place.");
+//            System.out.println(player + " plays as the "+player.getOrder()+"th place.");
 //        }
 
 
