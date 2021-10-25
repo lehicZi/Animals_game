@@ -55,10 +55,10 @@ public class Animal{
                 return poids;
             }
             case 2 -> {
-                return longevite;
+                return longueur;
             }
             case 3 -> {
-                return longueur;
+                return longevite;
             }
             case 4 -> {
                 return gestationIncubation;

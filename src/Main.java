@@ -6,7 +6,7 @@ public class Main {
 
         int numberPlayers = 2;
         int numberRealPlayers = 1;
-        int numberAIPlayers = numberPlayers-numberRealPlayers;
+        int numberAIPlayers = numberPlayers - numberRealPlayers;
         String[] RealPlayersNames = new String[numberRealPlayers];
 
         for (int nameIndex = 0; nameIndex < numberRealPlayers; nameIndex++) {
@@ -16,9 +16,9 @@ public class Main {
         }
 
 
-        Game gameTest = new Game(numberPlayers, numberRealPlayers, RealPlayersNames);
+        Game gameTest = new BattleGame(numberPlayers, numberRealPlayers, RealPlayersNames);
 
-        gameTest.giveOrder(gameTest.defineStarter(),gameTest.getPlayersList());
+        gameTest.giveOrder(gameTest.defineStarter(), gameTest.getPlayersList());
 
 //        for(Player player : gameTest.getPlayersList()) {
 //            System.out.println(player + " plays as the "+player.getOrder()+"th place.");

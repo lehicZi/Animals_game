@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 public class RealPlayer extends Player{
 
-    public RealPlayer(String playerName, Deck playerDeck) {
-        super(playerName, playerDeck);
+    public RealPlayer(String playerName, Deck playerDeck, Deck winnedCards) {
+        super(playerName, playerDeck, winnedCards);
     }
 
     @Override
@@ -19,6 +19,31 @@ public class RealPlayer extends Player{
             return attributeChoice();
         }
     }
+
+    @Override
+    public  boolean switchAttributeProposal() {
+        try {
+            Scanner userChoice = new Scanner(System.in);
+            System.out.println("Your animal's rareté is higher than VERT, do you want to try to change the effective attribute ? (1 : yes, 2 : no).");
+            switch (userChoice.nextInt()) {
+                case 1 -> {
+                    return true;
+                }
+                case 2 -> {
+                    return false;
+                }
+                default -> {
+                    System.out.println("is it too hard to enter 1 or 2 ?");
+                    return switchAttributeProposal();
+                }
+            }
+            }
+        catch (InputMismatchException e) {
+            System.out.println("is it too hard to enter 1 or 2 ?");
+            return switchAttributeProposal();
+        }
+    }
+
 
     @Override
     public int attributeSwitch(){

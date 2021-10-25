@@ -9,17 +9,22 @@ public class Fight {
     public static Animal animalFight (int effectiveAttribute, List<Animal> fightingAnimals) {
 
         Animal winner = fightingAnimals.get(0);
-
+//        System.out.println(effectiveAttribute);
+//        System.out.println(fightingAnimals);
         for (Animal animal : fightingAnimals){
-            if(animal.getAttribute(effectiveAttribute) > winner.getAttribute(effectiveAttribute)){
+            double animalAttribute = animal.getAttribute(effectiveAttribute);
+            double winnerAttribute = winner.getAttribute(effectiveAttribute);
+//            System.out.println(animalAttribute);
+//            System.out.println(winnerAttribute);
+            if(animalAttribute > winnerAttribute){
                 winner = animal;
             }
-            else if (animal.getAttribute(effectiveAttribute) == winner.getAttribute(effectiveAttribute)){
+            else if (animalAttribute == winnerAttribute){
                 if (animal.getRarete() > winner.getRarete()){
                     winner = animal;
                 }
                 else if (animal.getRarete() == winner.getRarete()){
-                    if(animal.getOwner().getOrder() > winner.getOwner().getOrder()){
+                    if(animal.getOwner().getOrder() < winner.getOwner().getOrder()){
                         winner = animal;
                     }
                 }

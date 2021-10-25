@@ -1,15 +1,17 @@
+import constant.Rarete;
+
 import java.util.*;
 
-public class Game {
+public abstract class Game {
 
-    private final int numberPlayers;
-    private final int numberRealPlayers;
+    protected final int numberPlayers;
+    protected final int numberRealPlayers;
     List<Animal> listAllCards;
-    private int numberCardsFree;
-    private final int numberCardsPerplayer;
-    private final List<Player> realPlayersList;
-    private final List<Player> AIPlayersList;
-    private final List<Player> playersList;
+    protected int numberCardsFree;
+    protected final int numberCardsPerplayer;
+    protected final List<Player> realPlayersList;
+    protected final List<Player> AIPlayersList;
+    protected final List<Player> playersList;
 
 
     public Game(int numberPlayers, int numberRealPlayers, String [] realPlayersNames) {
@@ -45,7 +47,8 @@ public class Game {
         Deck deck;
         for (String name : namesRealPlayers) {
             deck = deal();
-            player = new RealPlayer(name, deck);
+            Deck deck2 = new Deck();
+            player = new RealPlayer(name, deck, deck2);
             for (Animal animal : deck.getListCards()) {
                 animal.setOwner(player);
             }
@@ -60,7 +63,8 @@ public class Game {
         for (int nameIndex = 0; nameIndex < (numberPlayers-numberRealPlayers); nameIndex++) {
             AIsname = "Bot " + (nameIndex+1);
             deck = deal();
-            player = new AIPlayer(AIsname, deck);
+            Deck deck2 = new Deck();
+            player = new AIPlayer(AIsname, deck, deck2);
             for (Animal animal : deck.getListCards()) {
                 animal.setOwner(player);
             }
@@ -141,55 +145,7 @@ public class Game {
         return orderedPlayersList;
     }
 
-    public void playersFight (){
-        for (int currentFight = 0; currentFight < numberCardsPerplayer; currentFight++) {
-            List<Animal> fightingAnimals = new ArrayList<>();
-            StringBuilder annonce = new StringBuilder();
-            Player starter = playersList.get(0);
-
-            for (int playerIndex = 0; playerIndex < numberPlayers; playerIndex++) {
-                Player currentPlayer = playersList.get(playerIndex);
-                Animal currentAnimal = currentPlayer.getPlayerDeck().getListCards().get(currentFight);
-                fightingAnimals.add(currentAnimal);
-                if (currentPlayer.getOrder() == 1){
-                    starter = currentPlayer;
-                }
-                if (playerIndex == numberPlayers - 1) {
-                    annonce.append(currentPlayer).append("'s ").append(currentAnimal.getNom());
-                } else {
-                    annonce.append(currentPlayer).append("'s ").append(currentAnimal.getNom()).append(" VS ");
-                }
-
-            }
-
-//            System.out.println(annonce);
-            for (Player player : realPlayersList){
-                    System.out.println(player.getPlayerDeck().getListCards().get(currentFight));
-            }
-
-            int codeEffectiveAttribute = starter.attributeChoice();
-
-            Animal startersAnimal = starter.getPlayerDeck().getListCards().get(currentFight);
-
-            System.out.println(starter + " chose " + startersAnimal.getAttributesName(codeEffectiveAttribute));
-
-            Animal animalWinner = Fight.animalFight(codeEffectiveAttribute, fightingAnimals);
-            Player playerWinner = animalWinner.getOwner();
-
-            giveOrder(playerWinner, playersList);
-
-//            System.out.println(orderPlayersList());
-
-            System.out.println("The fight was " + annonce);
-            System.out.println(animalWinner.getOwner().getPlayerName() + " wins with his " + animalWinner.getNom());
-
-            playerWinner.incrementVictories();
-
-            Scanner block = new Scanner(System.in);
-            System.out.println("Please tap any thing to pursue.");
-            block.next();
-        }
-    }
+    public abstract void playersFight ();
 
     public Player findFinalWinner(List <Player> playersList){
         Player finalWinner = playersList.get(0);
