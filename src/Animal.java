@@ -1,4 +1,11 @@
 public class Animal{
+    /**Classe permettant de définir ce qu'est un animal.
+     * nom est son nom.
+     * poids, longueur, longevite, et gestationIncubation sont les 4 attributs permettant de le comparer.
+     * rareté est un attribut supplémentaire, utilisé pour le changement d'attribut et si la comparaison
+     * sur l'un des attribut précedents se solde sur une égalité.
+     * owner est le joueur auquel appartient l'animal.
+     */
 
     private final String nom;
     private final double poids;
@@ -7,6 +14,16 @@ public class Animal{
     private final double gestationIncubation;
     private final int rarete;
     private Player owner;
+
+    /**Constructeur de la classe
+     * Créé l'animal en fonction avec les caractéristiques données en paramètre.
+     * @param nom son nom
+     * @param poids son poids
+     * @param longueur sa longueur
+     * @param longevite sa longévité
+     * @param gestation_incubation son temps de gestion/d'incubation
+     * @param rarete sa rareté
+     */
 
     public Animal(String nom, double poids, double longueur, double longevite, double gestation_incubation, int rarete) {
         this.nom = nom;
@@ -17,6 +34,53 @@ public class Animal{
         this.rarete = rarete;
     }
 
+    /**Permet de récupérer la valeur d'un attribut en fonction d'un code
+     * @param attribute le code de l'attribut voulu
+     * @return la valeur de l'attribut
+     */
+
+    public double getAttribute(int attribute){
+        switch (attribute) {
+            case 1 -> {
+                return poids;
+            }
+            case 2 -> {
+                return longueur;
+            }
+            case 3 -> {
+                return longevite;
+            }
+            case 4 -> {
+                return gestationIncubation;
+            }
+            default -> throw new IllegalStateException();
+        }
+    }
+
+    /**Permet de récupérer la nom d'un attribut en fonction d'un code
+     * @param attribute le code de l'attribut voulu
+     * @return le nom de l'attribut
+     */
+
+    public String getAttributesName(int attribute){
+        switch (attribute) {
+            case 1 -> {
+                return "poids";
+            }
+            case 2 -> {
+                return "longueur";
+            }
+            case 3 -> {
+                return "longévité";
+            }
+            case 4 -> {
+                return "gestion/incubation";
+            }
+            default -> throw new IllegalStateException();
+        }
+    }
+
+    //Getters
     public String getNom() {
         return nom;
     }
@@ -45,50 +109,24 @@ public class Animal{
         return owner;
     }
 
+    //Setter
     public void setOwner(Player owner) {
         this.owner = owner;
     }
 
-    public double getAttribute(int attribute){
-        switch (attribute) {
-            case 1 -> {
-                return poids;
-            }
-            case 2 -> {
-                return longueur;
-            }
-            case 3 -> {
-                return longevite;
-            }
-            case 4 -> {
-                return gestationIncubation;
-            }
-            default -> throw new IllegalStateException();
-        }
-    }
-
-    public String getAttributesName(int attribute){
-        switch (attribute) {
-            case 1 -> {
-                return "poids";
-            }
-            case 2 -> {
-                return "longueur";
-            }
-            case 3 -> {
-                return "longévité";
-            }
-            case 4 -> {
-                return "gestion/incubation";
-            }
-            default -> throw new IllegalStateException();
-        }
-    }
+    /**Redéfinission de toString()
+     * @return le nom et les caractéristiques de l'animal
+     */
 
     @Override
     public String toString(){
         return nom + " : poids = " + poids + " kg, longueur = " + longueur + " m, longévité = " + longevite + " ans, gestation/incubation = " + gestationIncubation + " jours." ;
     }
+
+    /**Redéfinission de equals()
+     * @param o l'objet auquel comparer l'animal
+     * @return true si l'objet est un Animal ET qu'ils ont le même nom, return false sinon.
+     */
 
     @Override
     public boolean equals(Object o){

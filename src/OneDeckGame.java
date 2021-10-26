@@ -1,81 +1,62 @@
-import constant.Rarete;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class OneDeckGame extends Game{
+    /** Classe fille de Game, représentant une partie où un seul parcours des decks des joueurs est fait.
+     *  Se construit avec les mêmes paramètres que la classe Game :
+     * @param numberPlayers le nombre de joueurs
+     * @param numberRealPlayers le nombre de joueurs humains
+     */
 
-    public OneDeckGame(int numberPlayers, int numberRealPlayers, String[] realPlayersNames) {
-        super(numberPlayers, numberRealPlayers, realPlayersNames);
+    public OneDeckGame(int numberPlayers, int numberRealPlayers) {
+        super(numberPlayers, numberRealPlayers);
     }
+
+    /**implémente le déroulé de la partie pour ce type de partie.
+     */
 
     @Override
     public void playersFight(){
-
+        //Overture d'un scanner pour marquer une pause à la fin de chaque manche.
+        Scanner scanner = new Scanner(System.in);
+        // On parcourt les cartes, currentFight représente une manche.
         for (int currentFight = 0; currentFight < numberCardsPerplayer; currentFight++) {
+            playersList.orderPlayersList();
             List<Animal> fightingAnimals = new ArrayList<>();
             StringBuilder annonce = new StringBuilder();
-            Player starter = playersList.get(0);
+            // Le joueur qui commence est le premier joueur de la liste ordonnée, donc le joueur avec dont l'attribut Order
+            // vaut 1.
+            Player starter = playersList.getPlayer(0);
 
-            for (int playerIndex = 0; playerIndex < numberPlayers; playerIndex++) {
-                Player currentPlayer = playersList.get(playerIndex);
-                Animal currentAnimal = currentPlayer.getPlayersInitialDeck().getListCards().get(currentFight);
-                fightingAnimals.add(currentAnimal);
-                if (currentPlayer.getOrder() == 1){
-                    starter = currentPlayer;
-                }
-                if (playerIndex == numberPlayers - 1) {
-                    annonce.append(currentPlayer).append("'s ").append(currentAnimal.getNom());
-                } else {
-                    annonce.append(currentPlayer).append("'s ").append(currentAnimal.getNom()).append(" VS ");
-                }
-
-            }
+            addAnimalsAndBuildAnounce(currentFight, fightingAnimals, annonce);
 
 //            System.out.println(annonce);
-            for (Player player : realPlayersList){
-                System.out.println(player.getPlayersInitialDeck().getListCards().get(currentFight));
-            }
 
+            printAnimalStats(currentFight);
+
+            // Le codeEffectiveAttribute est le code permettant de connaître l'attribut effectif, il est print ici, mais
+            // peut changer après
             int codeEffectiveAttribute = starter.attributeChoice();
 
+            // On récupère l'animal du joueur qui commence
             Animal startersAnimal = starter.getPlayersInitialDeck().getListCards().get(currentFight);
 
             System.out.println(starter + " chose " + startersAnimal.getAttributesName(codeEffectiveAttribute));
 
             // Partie changement d'attribut
+            final int newCodeEffectiveAttribute = attributeSwitching(currentFight, starter, startersAnimal);
+            // if permettant de prendre en compte le nouveau code s'il ne vaut pas -1, sinon, l'ancien est gardé.
+            codeEffectiveAttribute = newCodeEffectiveAttribute == -1 ? codeEffectiveAttribute : newCodeEffectiveAttribute;
 
-            List <Player> orderedPlayersList = orderPlayersList();
-            for (int notStarters = 1; notStarters < numberPlayers; notStarters ++ ){
-                Player notStarter = orderedPlayersList.get(notStarters);
-                Animal notStartersAnimal = notStarter.getPlayersInitialDeck().getListCards().get(currentFight);
-                System.out.println(notStarter);
-                if (notStartersAnimal.getRarete() > 0){
-                    if (orderPlayersList().get(notStarters).switchAttributeProposal()){
-                        int tentativeCodeEffectiveAttribute = notStarter.attributeSwitch();
-                        if (notStartersAnimal.getRarete() > startersAnimal.getRarete()){
-                            starter = notStarter;
-                            startersAnimal = notStartersAnimal;
-                            codeEffectiveAttribute = tentativeCodeEffectiveAttribute;
-                            System.out.println(notStarter + " changed the effective attribute and chose " + notStartersAnimal.getAttributesName(codeEffectiveAttribute));
-                        }
-                        else {
-                            System.out.println("Sorry  " + notStarter + ", you can't change the effective attribute because your " + notStartersAnimal.getNom() +"'s rareté is " + Rarete.nameRarete(notStartersAnimal.getRarete()) + " while " + starter + "'s " + startersAnimal.getNom() +"'s rareté is " + Rarete.nameRarete(startersAnimal.getRarete()));
-                        }
-                    }
-                }
-
-            }
-
-            // Partie changement d'attribut
 
             Animal animalWinner = Fight.animalFight(codeEffectiveAttribute, fightingAnimals);
 //            System.out.println(animalWinner);
             Player playerWinner = animalWinner.getOwner();
 //            System.out.println(playerWinner);
 
-            giveOrder(playerWinner, playersList);
+            // L'ordre des joueurs est redéfini en fonction du gagnant
+            playersList.giveOrder(playerWinner);
 
 //            System.out.println(orderPlayersList());
 
@@ -84,10 +65,11 @@ public class OneDeckGame extends Game{
 
             playerWinner.incrementVictories();
 
-            Scanner block = new Scanner(System.in);
+            //Permet de bloquer le déroulé du code pour avoir une pause à la fin d'un manche
             System.out.println("Please tap any thing to pursue.");
-            block.next();
+            scanner.next();
         }
+        scanner.close();
     }
 
 

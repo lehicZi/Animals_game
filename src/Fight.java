@@ -1,29 +1,41 @@
 import java.util.List;
 
 public class Fight {
-
+    /**Classe utilitaire permettant de définir comment si passe un combat entre n animaux.
+        Constructeur privé, car la classe n'a pas à être instanciée.
+     */
     private Fight() {
 
     }
+
+    /** Définit un animal gagnant en fonction animaux présents et de l'attribut choisi
+     * @param effectiveAttribute l'attribut choisi
+     * @param fightingAnimals les animaux présents
+     * @return l'animal gagnant
+     */
 
     public static Animal animalFight (int effectiveAttribute, List<Animal> fightingAnimals) {
 
         Animal winner = fightingAnimals.get(0);
 //        System.out.println(effectiveAttribute);
 //        System.out.println(fightingAnimals);
+        // Pour tous les animaux
         for (Animal animal : fightingAnimals){
             double animalAttribute = animal.getAttribute(effectiveAttribute);
             double winnerAttribute = winner.getAttribute(effectiveAttribute);
 //            System.out.println(animalAttribute);
 //            System.out.println(winnerAttribute);
+            // Si l'attribut de l'animal est supérieur
             if(animalAttribute > winnerAttribute){
                 winner = animal;
             }
             else if (animalAttribute == winnerAttribute){
+                // si la rareté de l'animal est supérieure
                 if (animal.getRarete() > winner.getRarete()){
                     winner = animal;
                 }
                 else if (animal.getRarete() == winner.getRarete()){
+                    // Si le joueur auquel appartient l'animal joue avant
                     if(animal.getOwner().getOrder() < winner.getOwner().getOrder()){
                         winner = animal;
                     }

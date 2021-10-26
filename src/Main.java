@@ -4,21 +4,21 @@ public class Main {
 
     public static void main(String[] arg) {
 
+        /* Initialisation en entrant le nombre de joueurs et le nombre de joueurs réels
+         */
+
         int numberPlayers = 2;
         int numberRealPlayers = 1;
         int numberAIPlayers = numberPlayers - numberRealPlayers;
-        String[] RealPlayersNames = new String[numberRealPlayers];
-
-        for (int nameIndex = 0; nameIndex < numberRealPlayers; nameIndex++) {
-            Scanner playerName = new Scanner(System.in);
-            System.out.println("Please enter Player N°" + (nameIndex + 1) + "'s name.");
-            RealPlayersNames[nameIndex] = playerName.next();
-        }
 
 
-        Game gameTest = new BattleGame(numberPlayers, numberRealPlayers, RealPlayersNames);
+        /* Instanciation dune partie (de tpe Battlegame ou OneDeckGame).
+         */
+        Game gameTest = new BattleGame(numberPlayers, numberRealPlayers);
 
-        gameTest.giveOrder(gameTest.defineStarter(), gameTest.getPlayersList());
+        /* L'ordre des joueurs initial est demandé puis appliqué
+         */
+        gameTest.getPlayersList().giveOrder(gameTest.defineStarter());
 
 //        for(Player player : gameTest.getPlayersList()) {
 //            System.out.println(player + " plays as the "+player.getOrder()+"th place.");
@@ -26,7 +26,8 @@ public class Main {
 
 
         gameTest.playersFight();
-        Player finalWinner = gameTest.findFinalWinner(gameTest.getPlayersList());
+
+        Player finalWinner = gameTest.findFinalWinner();
 
         System.out.println(finalWinner.getPlayerName() + " wins the game with " + finalWinner.getVictories() + " victories !");
     }
